@@ -2,8 +2,9 @@ package com.raj.app.vertex_grafana_prometheus;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
+import io.vertx.core.Vertx;
 
-public class MainVerticle extends AbstractVerticle {
+public class WebServerVerticle extends AbstractVerticle {
 
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
