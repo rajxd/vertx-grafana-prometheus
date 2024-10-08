@@ -2,8 +2,6 @@ package com.raj.app.vertex_grafana_prometheus;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
-import io.vertx.core.Vertx;
-import io.vertx.example.micrometer.verticles.Greetings;
 import io.vertx.ext.web.Router;
 
 public class WebServerVerticle extends AbstractVerticle {
@@ -14,6 +12,11 @@ public class WebServerVerticle extends AbstractVerticle {
 		Router router = Router.router(vertx);
 		router.get("/").handler(req -> {
 			req.response().putHeader("content-type", "text/plain").end("Hello from Vert.x!");
+		});
+		router.get("/eventbus").handler(req -> {
+			vertx.eventBus().request("greetings", "Hello").onSuccess(r->{
+				req.response().putHeader("content-type", "text/plain").end(r.body().toString());
+			});
 		});
 
 		vertx.createHttpServer().requestHandler(router).listen(8888).onComplete(http -> {
