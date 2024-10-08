@@ -15,11 +15,14 @@ public class App {
 
 		MicrometerMetricsOptions options = new MicrometerMetricsOptions()
 				.setPrometheusOptions(new VertxPrometheusOptions().setStartEmbeddedServer(true)
-						.setEmbeddedServerOptions(new HttpServerOptions().setPort(8887)).setEnabled(true))
+						.setEmbeddedServerOptions(new HttpServerOptions().setPort(8887))
+						.setEnabled(true))
 				.setLabels(EnumSet.allOf(Label.class)).setEnabled(true);
 
 	    Vertx vertx = Vertx.vertx(new VertxOptions().setMetricsOptions(options));
 		vertx.deployVerticle(new WebServerVerticle());
+		vertx.deployVerticle(new EventBusConsumerVerticle());
+		vertx.deployVerticle(new EventBusProducerVerticle());
 	}
 
 }
